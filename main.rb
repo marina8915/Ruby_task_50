@@ -15,17 +15,15 @@ class Tasks
 
   # array of prime numbers
   def array_separators(array:)
-    array.select { |x|
-      (1..x).select { |y| (x % y).zero? }.length <= 2
-    }
+    array.select { |x| (1..x).select { |y| (x % y).zero? }.length <= 2 }
   end
 
   # matrix n x m
-  def new_matrix(n:, m:)
+  def new_matrix(n_lines:, m_lines:)
     array = []
-    (0..(n - 1)).each do |i|
+    (0..(n_lines - 1)).each do |i|
       array[i] = []
-      (0..(m - 1)).each { array[i].push(rand(1..10)) }
+      (0..(m_lines - 1)).each { array[i].push(rand(1..10)) }
     end
     print array, "\n"
     return array
@@ -41,10 +39,10 @@ class Tasks
     return digit
   end
 
-  # array with random digits in diapason x..y
-  def new_array(n:, x: -100, y: 100)
+  # array with random digits in diapason lower_bound..y
+  def new_array(quantity:, lower_bound: -100, top_bound: 100)
     array = []
-    n.times { array.push(rand(x..y)) }
+    n.times { array.push(rand(lower_bound..top_bound)) }
     print "Elements: #{array} \n"
     return array
   end
@@ -58,14 +56,12 @@ class Tasks
     end
   end
 
-  #place of the horse
+  # place of the horse
   def horses_num(run:, horse_num:)
     run.map! { |x| x + rand(1..100) }
-    first = run.max
-    last = run.min
-    if run[horse_num - 1] == first
+    if run[horse_num - 1] == run.max
       text = 'First'
-    elsif run[horse_num - 1] == last
+    elsif run[horse_num - 1] == run.min
       text = 'Last'
     else
       text = 'Second'
@@ -73,31 +69,32 @@ class Tasks
     { run_array: run, text: text }
   end
 
-  def task_1(a:, b:)
+  def task_1(number_a:, number_b:)
     task(num: 1)
-    { sum: a + b,
-      difference: a - b,
-      multiplication: a * b }
+    { sum: number_a + number_b,
+      difference: number_a - number_b,
+      multiplication: number_a * number_b }
   end
 
-  def task_2(a:, b:)
+  def task_2(number_a:, number_b:)
     task(num: 2)
-    ((a.abs - b.abs) / (1 + (a * b).abs)).round(4)
+    ((number_a.abs - number_b.abs) / (1 + (number_a * number_b).abs)).round(4)
   end
 
-  def task_3(l:)
+  def task_3(edge_length:)
     task(num: 3)
-    { V: l**3, S: l**2 * 6 }
+    { Volume: edge_length**3, Square: edge_length**2 * 6 }
   end
 
-  def task_6(a:, b:)
+  def task_6(cathetus_a:, cathetus_b:)
     task(num: 6)
-    { c: Math.sqrt(a**2 + b**2).round(4), S: a * b / 2 }
+    { hypotenuse: Math.sqrt(cathetus_a**2 + cathetus_b**2).round(4),
+      Square: cathetus_a * cathetus_b / 2 }
   end
 
-  def task_8(n:, r:)
+  def task_8(n_corners:, radius:)
     task(num: 8)
-    (2 * r * Math.tan(PI / n) * n).round(4)
+    (2 * radius * Math.tan(PI / n_corners) * n_corners).round(4)
   end
 
   def task_9(resistance1:, resistance2:, resistance3:)
@@ -111,62 +108,66 @@ class Tasks
     result.round(2)
   end
 
-  def task_12(n:)
+  def task_12(side_of_triangle:)
     task(num: 12)
-    result = Math.sqrt(3) * n / 4 * n**2
+    result = Math.sqrt(3) * side_of_triangle / 4 * side_of_triangle**2
     result.round(2)
   end
 
-  def task_13(l:)
+  def task_13(pendulum_length:)
     task(num: 13)
-    (2 * 3.14 * Math.sqrt(l / 9.81)).round(2)
+    (2 * 3.14 * Math.sqrt(pendulum_length / 9.81)).round(2)
   end
 
-  def task_15(a:, c:)
+  def task_15(cathetus_a:, hypotenuse:)
     task(num: 15)
-    b = Math.sqrt(c**2 - a**2).round(2)
-    { b: b, S: ((a + b - c) / 2).round(2) }
+    cathetus_b = Math.sqrt(c**2 - cathetus_a**2).round(2)
+    { cathetus_b: cathetus_b, S: ((cathetus_a + b - hypotenuse) / 2).round(2) }
   end
 
-  def task_16(l:)
+  def task_16(circumference:)
     task(num: 16)
-    result = PI * Math.sqrt(l / (2 * PI))
+    result = PI * Math.sqrt(circumference / (2 * PI))
     result.round(2)
   end
 
-  def task_24(x1:, x2:, y1:, y2:)
+  def task_24(coordinate_x1:, coordinate_x2:, coordinate_y1:, coordinate_y2:)
     task(num: 24)
-    result = Math.sqrt((x1 - x2)**2 + (y1 - y2)**2)
+    difference_x = coordinate_x1 - coordinate_x2
+    difference_y = coordinate_y1 - coordinate_y2
+    result = Math.sqrt(difference_x**2 + difference_y**2)
     result.round(2)
   end
 
-  def task_30(x:)
+  def task_30(real_num:)
     task(num: 30)
-    res1 = 1 - 2 * x + 3 * x**2 - 4 * x**3
-    res2 = 1 + 2 * x + 3 * x**2 + 4 * x**3
+    degree2 = real_num**2
+    degree3 = real_num**3
+    res1 = 1 - 2 * real_num + 3 * degree2 - 4 * degree3
+    res2 = 1 + 2 * real_num + 3 * degree2 + 4 * degree2
     { result1: res1, result2: res2 }
   end
 
-  def task_33(x:, y:)
+  def task_33(real_number_x:, real_number_y:)
     task(num: 33)
-    array = [x, y]
+    array = [real_number_x, real_number_y]
     { min: array.min, max: array.max }
   end
 
-  def task_34(x:, y:, z:)
+  def task_34(real_number_x:, real_number_y:, real_number_z:)
     task(num: 34)
-    array = [x, y, z]
+    array = [real_number_x, real_number_y, real_number_z]
     { min: array.min, max: array.max }
   end
 
   def task_41
     task(num: 41)
-    new_array(n: 3).select { |x| x <= 3 && x >= 1 }
+    new_array(quantity: 3).select { |x| x <= 3 && x >= 1 }
   end
 
   def task_43
     task(num: 43)
-    array = new_array(n: 3)
+    array = new_array(quantity: 3)
     array2 = array.select { |x| x > 0 }.map { |x| x**2 }
     { array: array, array2: array2 }
   end
@@ -200,7 +201,7 @@ class Tasks
 
   def task_182(natural_number:)
     task(num: 182)
-    array = new_array(n: natural_number)
+    array = new_array(quantity: natural_number)
     array2 = array.select { |elem| (elem % 5).zero? && elem % 7 != 0 }
     { arr_new: array2,
       sum: array2.reduce(:+),
@@ -209,7 +210,7 @@ class Tasks
 
   def task_185(natural_number:)
     task(num: 185)
-    array = new_array(n: natural_number)
+    array = new_array(quantity: natural_number)
     array2 = array.select { |elem| elem > 0 }
     { array: array2, sum: array2.reduce(:+)**2 }
   end
@@ -217,7 +218,7 @@ class Tasks
   def task_191(natural_number:)
     task(num: 191)
     quantity = 0
-    array = new_array(n: natural_number)
+    array = new_array(quantity: natural_number)
     array.map! do |elem|
       if elem > 7
         quantity += 1
@@ -231,20 +232,21 @@ class Tasks
 
   def task_205(natural_number:)
     task(num: 205)
-    array = new_array(n: natural_number)
+    array = new_array(quantity: natural_number)
     { array: array,
       max: array.map(&:abs).max,
-      sum: array.map { |x| x * x}.reduce(:+) }
+      sum: array.map { |x| x * x }.reduce(:+) }
   end
 
   def task_207(natural_number:)
     task(num: 207)
-    number_array(digit: natural_number).delete_if{ |x| x == 0 || x == 5 }.join.to_i
+    arr = number_array(digit: natural_number).delete_if { |x| x.zero? || x == 5 }
+    arr.join.to_i
   end
 
   def task_224(natural_number:)
     task(num: 224)
-    (1..natural_number).select { |x| (natural_number % x).zero?  }
+    (1..natural_number).select { |x| (natural_number % x).zero? }
   end
 
   def task_225(natural_number:)
@@ -257,17 +259,17 @@ class Tasks
   def task_230(natural_number:)
     task(num: 230)
     min = 1000
-    num_array = new_array(n: natural_number)
-    num_array.inject { |x, y|
+    num_array = new_array(quantity: natural_number)
+    num_array.inject do |x, y|
       min = (x - y).abs if (x - y).abs < min
       y
-    }
+    end
     return min
   end
 
   def task_272
     task(num: 272)
-    precipitation = new_array(n: 50, x: 1, y: 100)
+    precipitation = new_array(quantity: 50, lower_bound: 1, top_bound: 100)
     average = precipitation.reduce(:+) / precipitation.size
     deviation = []
     precipitation.each { |x| deviation.push(x - average) }
@@ -278,8 +280,8 @@ class Tasks
 
   def task_279(natural_number:)
     task(num: 279)
-    a = new_array(n: natural_number)
-    b = new_array(n: natural_number).reverse!
+    a = new_array(quantity: natural_number)
+    b = new_array(quantity: natural_number).reverse!
     ab = []
     (0..natural_number - 1).each { |i| ab.push(a[i] + b[i]) }
     { array_a: a, array_b: b, array_ab: ab }
@@ -294,14 +296,14 @@ class Tasks
 
   def task_317
     task(num: 317)
-    array = new_array(n: 10)
+    array = new_array(quantity: 10)
     sum_array = 0
     (0..9).each { |i| sum_array += array[i]**(i + 1) }
   end
 
   def task_325(natural_number:)
     task(num: 325)
-    separators = (1..natural_number).select{ |x| (natural_number % x).zero? }
+    separators = (1..natural_number).select { |x| (natural_number % x).zero? }
     array_separators(array: separators)
   end
 
@@ -312,7 +314,7 @@ class Tasks
 
   def task_536(natural_number:)
     task(num: 536)
-    array = new_array(n: natural_number)
+    array = new_array(quantity: natural_number)
     { array: array, identical_elements: array != array.uniq }
   end
 
@@ -326,9 +328,9 @@ class Tasks
         a[i] << 1
       else
         a[i] << 1
-        (0..a[i - 1].size - 2).each { |j|
+        (0..a[i - 1].size - 2).each do |j|
           a[i].unshift(a[i - 1][j] + a[i - 1][j + 1])
-        }
+        end
         a[i].unshift(1)
       end
       print a[i], "\n"
@@ -348,21 +350,23 @@ class Tasks
     return new_array
   end
 
-  def task_606(a:, b:, c:, d:)
+  def task_606(side_a:, side_b:, side_c:, side_d:)
     task(num: 606)
-    rectangle = [a, b, c, d]
+    rectangle = [side_a, side_b, side_c, side_d]
     sum_rectangle = rectangle.reduce(:+)
     rectangle_flag = true
-    (0..3).each{ |i|
+    (0..3).each do |i|
       rectangle_flag = false if (sum_rectangle - rectangle[i]) < rectangle[i]
-    }
+    end
     return rectangle_flag
   end
 
   def task_697(natural_number1:, natural_number2:, natural_number3:)
     task(num: 697)
-    matrix_a = Matrix.rows(new_matrix(n: natural_number1, m: natural_number2))
-    matrix_b = Matrix.rows(new_matrix(n: natural_number2, m: natural_number3))
+    matrix_a = Matrix.rows(new_matrix(n_lines: natural_number1,
+                                      m_lines: natural_number2))
+    matrix_b = Matrix.rows(new_matrix(n_lines: natural_number2,
+                                      m_lines: natural_number3))
     { matrix_A: matrix_a,
       matrix_B: matrix_b,
       result: matrix_a * matrix_b }
@@ -370,17 +374,17 @@ class Tasks
 
   def task_698(natural_number:)
     task(num: 698)
-    matrix = Matrix.rows(new_matrix(n: natural_number,
-                                    m: natural_number))
+    matrix = Matrix.rows(new_matrix(n_lines: natural_number,
+                                    m_lines: natural_number))
     { matrix: matrix, result: matrix**2 }
   end
 
   def task_699(natural_number:)
     task(num: 699)
-    matrix_a = Matrix.rows(new_matrix(n: natural_number,
-                                      m: natural_number))
-    matrix_b = Matrix.rows(new_matrix(n: natural_number,
-                                      m: natural_number))
+    matrix_a = Matrix.rows(new_matrix(n_lines: natural_number,
+                                      m_lines: natural_number))
+    matrix_b = Matrix.rows(new_matrix(n_lines: natural_number,
+                                      m_lines: natural_number))
     result = matrix_a * matrix_b - matrix_b * matrix_a
     { matrix_A: matrix_a,
       matrix_B: matrix_b,
@@ -389,21 +393,20 @@ class Tasks
 
   def task_704(natural_number:)
     task(num: 704)
-    matrix_a = Matrix.rows(new_matrix(n: natural_number,
-                                      m: natural_number))
-    matrix_b = Matrix.rows(new_matrix(n: natural_number,
-                                      m: natural_number))
-    matrix_c = Matrix.rows(new_matrix(n: natural_number,
-                                      m: natural_number))
-    { matrix_A: matrix_a,
-      matrix_B: matrix_b,
-      matrix_C: matrix_c,
-      result: (matrix_a + matrix_b) * matrix_c }
+    matrix_a = Matrix.rows(new_matrix(n_lines: natural_number,
+                                      m_lines: natural_number))
+    matrix_b = Matrix.rows(new_matrix(n_lines: natural_number,
+                                      m_lines: natural_number))
+    matrix_c = Matrix.rows(new_matrix(n_lines: natural_number,
+                                      m_lines: natural_number))
+    { matrix_A: matrix_a, matrix_B: matrix_b,
+      matrix_C: matrix_c, result: (matrix_a + matrix_b) * matrix_c }
   end
 
   def task_710(natural_number1:, natural_number2:)
     task(num: 710)
-    m = Matrix.rows(new_matrix(n: natural_number1, m: natural_number2))
+    m = Matrix.rows(new_matrix(n_lines: natural_number1,
+                               m_lines: natural_number2))
     m.transpose
   end
 
