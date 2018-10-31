@@ -42,7 +42,7 @@ class Tasks
   # array with random digits in diapason lower_bound..y
   def new_array(quantity:, lower_bound: -100, top_bound: 100)
     array = []
-    n.times { array.push(rand(lower_bound..top_bound)) }
+    quantity.times {array.push(rand(lower_bound..top_bound))}
     print "Elements: #{array} \n"
     return array
   end
@@ -121,8 +121,9 @@ class Tasks
 
   def task_15(cathetus_a:, hypotenuse:)
     task(num: 15)
-    cathetus_b = Math.sqrt(c**2 - cathetus_a**2).round(2)
-    { cathetus_b: cathetus_b, S: ((cathetus_a + b - hypotenuse) / 2).round(2) }
+    cathetus_b = Math.sqrt(hypotenuse ** 2 - cathetus_a ** 2).round(2)
+    {cathetus_b: cathetus_b,
+     Square: ((cathetus_a + cathetus_b - hypotenuse) / 2).round(2)}
   end
 
   def task_16(circumference:)
@@ -240,7 +241,10 @@ class Tasks
 
   def task_207(natural_number:)
     task(num: 207)
-    arr = number_array(digit: natural_number).delete_if { |x| x.zero? || x == 5 }
+    arr = number_array(digit: natural_number).delete_if do |x|
+      x.zero? ||
+          x == 5
+    end
     arr.join.to_i
   end
 
@@ -251,9 +255,9 @@ class Tasks
 
   def task_225(natural_number:)
     task(num: 225)
-    (1..natural_number).select { |x|
+    (1..natural_number).select do |x|
       (natural_number % x**2).zero? && natural_number % x**3 != 0
-    }
+    end
   end
 
   def task_230(natural_number:)
@@ -367,9 +371,9 @@ class Tasks
                                       m_lines: natural_number2))
     matrix_b = Matrix.rows(new_matrix(n_lines: natural_number2,
                                       m_lines: natural_number3))
-    { matrix_A: matrix_a,
-      matrix_B: matrix_b,
-      result: matrix_a * matrix_b }
+    {matrix_a: matrix_a,
+     matrix_b: matrix_b,
+     result: matrix_a * matrix_b }
   end
 
   def task_698(natural_number:)
@@ -386,9 +390,9 @@ class Tasks
     matrix_b = Matrix.rows(new_matrix(n_lines: natural_number,
                                       m_lines: natural_number))
     result = matrix_a * matrix_b - matrix_b * matrix_a
-    { matrix_A: matrix_a,
-      matrix_B: matrix_b,
-      result: result }
+    {matrix_a: matrix_a,
+     matrix_b: matrix_b,
+     result: result }
   end
 
   def task_704(natural_number:)
@@ -399,8 +403,8 @@ class Tasks
                                       m_lines: natural_number))
     matrix_c = Matrix.rows(new_matrix(n_lines: natural_number,
                                       m_lines: natural_number))
-    { matrix_A: matrix_a, matrix_B: matrix_b,
-      matrix_C: matrix_c, result: (matrix_a + matrix_b) * matrix_c }
+    {matrix_a: matrix_a, matrix_b: matrix_b,
+     matrix_c: matrix_c, result: (matrix_a + matrix_b) * matrix_c}
   end
 
   def task_710(natural_number1:, natural_number2:)
