@@ -26,7 +26,7 @@ class Tasks
       (0..(m_lines - 1)).each { array[i].push(rand(1..10)) }
     end
     print array, "\n"
-    return array
+    array
   end
 
   # if digit not in diapason lower_bound..top_bound enter new n
@@ -36,7 +36,7 @@ class Tasks
       puts 'take again'
       digit = gets.chomp.to_i
     end
-    return digit
+    digit
   end
 
   # array with random digits in diapason lower_bound..y
@@ -44,7 +44,7 @@ class Tasks
     array = []
     quantity.times { array.push(rand(lower_bound..top_bound)) }
     print "Elements: #{array} \n"
-    return array
+    array
   end
 
   # hint when comparing numbers
@@ -241,8 +241,8 @@ class Tasks
 
   def task_207(natural_number:)
     task(num: 207)
-    arr = number_array(digit: natural_number).delete_if do |x| x.zero? ||
-        x == 5
+    arr = number_array(digit: natural_number).delete_if do |x|
+      x.zero? || x == 5
     end
     arr.join.to_i
   end
@@ -267,7 +267,7 @@ class Tasks
       min = (x - y).abs if (x - y).abs < min
       y
     end
-    return min
+    min
   end
 
   def task_272
@@ -338,7 +338,7 @@ class Tasks
       end
       print a[i], "\n"
     end
-    return a
+    a
   end
 
   def task_561(natural_number:)
@@ -350,7 +350,7 @@ class Tasks
         new_array.push(s)
       end
     end
-    return new_array
+    new_array
   end
 
   def task_606(side_a:, side_b:, side_c:, side_d:)
@@ -361,7 +361,7 @@ class Tasks
     (0..3).each do |i|
       rectangle_flag = false if (sum_rectangle - rectangle[i]) < rectangle[i]
     end
-    return rectangle_flag
+    rectangle_flag
   end
 
   def task_697(natural_number1:, natural_number2:, natural_number3:)
@@ -422,7 +422,7 @@ class Tasks
     task(num: 823)
     leap_years = 0
     (year1..year2).each { |y| leap_years += 1 if (y % 4).zero? }
-    return leap_years
+    leap_years
   end
 
   def task_831(year:)
