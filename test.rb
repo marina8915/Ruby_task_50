@@ -40,7 +40,7 @@ class Test < Tasks
 
   def test_new_array_diapason
     array = new_array(quantity: 5, lower_bound: 1, top_bound: 10)
-    array_check = array.select {|x| x > 10 || x < 1}
+    array_check = array.select { |x| x > 10 || x < 1 }
     puts array_check
     assert(expected: [], actual: array_check)
   end
@@ -74,12 +74,12 @@ class Test < Tasks
   end
 
   def test_3
-    result = {Volume: 8, Square: 24}
+    result = { Volume: 8, Square: 24 }
     assert(expected: result, actual: task_3(edge_length: 2))
   end
 
   def test_6
-    result = {hypotenuse: 3.6056, Square: 3.0}
+    result = { hypotenuse: 3.6056, Square: 3.0 }
     assert(expected: result, actual: task_6(cathetus_a: 2.0, cathetus_b: 3))
   end
 
@@ -107,7 +107,7 @@ class Test < Tasks
   end
 
   def test_15
-    result = {cathetus_b: 8.77, Square: 0.88}
+    result = { cathetus_b: 8.77, Square: 0.88 }
     assert(expected: result, actual: task_15(cathetus_a: 2, hypotenuse: 9.0))
   end
 
@@ -124,18 +124,18 @@ class Test < Tasks
   end
 
   def test_30
-    result = {result1: -434, result2: 186}
+    result = { result1: -434, result2: 186 }
     assert(expected: result, actual: task_30(real_num: 5))
   end
 
   def test_33
-    result = {min: 5, max: 10}
+    result = { min: 5, max: 10 }
     assert(expected: result,
            actual: task_33(real_number_x: 5, real_number_y: 10))
   end
 
   def test_34
-    result = {min: 5, max: 20}
+    result = { min: 5, max: 20 }
     assert(expected: result,
            actual: task_34(real_number_x: 5,
                            real_number_y: 10,
@@ -143,13 +143,13 @@ class Test < Tasks
   end
 
   def test_41
-    actual = task_41.select {|x| x >= 3 && x <= 1}
+    actual = task_41.select { |x| x >= 3 && x <= 1 }
     assert(expected: [], actual: actual)
   end
 
   def test_43
     actual = task_43
-    expected = actual[:array].select {|x| x > 0}.map {|x| x ** 2}
+    expected = actual[:array].select { |x| x > 0 }.map { |x| x**2 }
     assert(expected: expected, actual: actual[:array2])
   end
 
@@ -166,11 +166,11 @@ class Test < Tasks
   end
 
   def test_67
-    result = {digits_number: 3,
-              sum: 13,
-              last_digit: 6,
-              first_digit: 2,
-              penultimate_number: 5}
+    result = { digits_number: 3,
+               sum: 13,
+               last_digit: 6,
+               first_digit: 2,
+               penultimate_number: 5 }
     assert(expected: result,
            actual: task_67(natural_number: 256))
   end
@@ -181,21 +181,21 @@ class Test < Tasks
     actual[:arr_new].each do |x|
       check.push(x) if (x % 5).zero? && x % 7 != 0
     end
-    assert(expected: {arr_new: check,
-                      sum: check.reduce(:+),
-                      quantity: check.length},
+    assert(expected: { arr_new: check,
+                       sum: check.reduce(:+),
+                       quantity: check.length },
            actual: actual)
   end
 
   def test_185
     actual = task_185(natural_number: 2)
-    check = actual[:array].select {|elem| elem < 0}
+    check = actual[:array].select { |elem| elem < 0 }
     assert(expected: [], actual: check)
   end
 
   def test_191
     actual = task_191(natural_number: 5)
-    check = actual[:array].select {|x| x > 7}
+    check = actual[:array].select { |x| x > 7 }
     assert(expected: [], actual: check)
   end
 
@@ -203,8 +203,8 @@ class Test < Tasks
     actual = task_205(natural_number: 2)
     check = actual[:array]
     max = check.map(&:abs).max
-    sum = check.map {|x| x * x}.reduce(:+)
-    assert(expected: {array: check, max: max, sum: sum},
+    sum = check.map { |x| x * x }.reduce(:+)
+    assert(expected: { array: check, max: max, sum: sum },
            actual: actual)
   end
 
@@ -227,10 +227,10 @@ class Test < Tasks
     array_check = actual[:array]
     average = array_check.reduce(:+) / array_check.size
     array_check2 = []
-    array_check.each {|x| array_check2.push(x - average)}
-    assert(expected: {array: array_check,
-                      average: average,
-                      deviation: array_check2},
+    array_check.each { |x| array_check2.push(x - average) }
+    assert(expected: { array: array_check,
+                       average: average,
+                       deviation: array_check2 },
            actual: actual)
   end
 
@@ -239,7 +239,7 @@ class Test < Tasks
     a = actual[:array_a]
     b = actual[:array_b]
     ab = []
-    (0..4).each {|i| ab.push(a[i] + b[i])}
+    (0..4).each { |i| ab.push(a[i] + b[i]) }
     assert(expected: ab, actual: actual[:array_ab])
   end
 
@@ -287,17 +287,17 @@ class Test < Tasks
     actual = task_697(natural_number1: 2,
                       natural_number2: 1,
                       natural_number3: 3)
-    assert(expected: {matrix_a: actual[:matrix_a],
-                      matrix_b: actual[:matrix_b],
-                      result: actual[:matrix_a] * actual[:matrix_b]},
+    assert(expected: { matrix_a: actual[:matrix_a],
+                       matrix_b: actual[:matrix_b],
+                       result: actual[:matrix_a] * actual[:matrix_b] },
            actual: actual)
   end
 
   def test_698
     actual = task_698(natural_number: 2)
     matrix = actual[:matrix]
-    assert(expected: {matrix: matrix,
-                      result: matrix ** 2},
+    assert(expected: { matrix: matrix,
+                       result: matrix**2 },
            actual: actual)
   end
 
@@ -306,19 +306,19 @@ class Test < Tasks
     matrix_a = actual[:matrix_a]
     matrix_b = actual[:matrix_b]
     result = matrix_a * matrix_b - matrix_b * matrix_a
-    assert(expected: {matrix_a: matrix_a,
-                      matrix_b: matrix_b,
-                      result: result},
+    assert(expected: { matrix_a: matrix_a,
+                       matrix_b: matrix_b,
+                       result: result },
            actual: actual)
   end
 
   def test_704
     actual = task_704(natural_number: 2)
-    assert(expected: {matrix_a: actual[:matrix_a],
-                      matrix_b: actual[:matrix_b],
-                      matrix_c: actual[:matrix_c],
-                      result: (actual[:matrix_a] + actual[:matrix_b]) *
-                          actual[:matrix_c]},
+    assert(expected: { matrix_a: actual[:matrix_a],
+                       matrix_b: actual[:matrix_b],
+                       matrix_c: actual[:matrix_c],
+                       result: (actual[:matrix_a] + actual[:matrix_b]) *
+                           actual[:matrix_c] },
            actual: actual)
   end
 
