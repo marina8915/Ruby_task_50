@@ -27,7 +27,7 @@ class Test < Tasks
   end
 
   def test_30
-    result = { result1: -434, result2: 186 }
+    result = { result1: -584, result2: 586 }
     assert(expected: result, actual: task_30(real_num: 5))
   end
 
@@ -145,6 +145,7 @@ class TestPhysics < Test
     assert(expected: 2.84, actual: task_13(pendulum_length: 2))
   end
 end
+
 # Tests for tasks with array
 class TestArray < Test
   def test_number_array
@@ -291,14 +292,13 @@ class TestGame < Test
 
   def test_horse_num
     result = horses_num(run: [1, 2, 3], horse_num: 2)
-    check_text = ''
-    if result[:run_array][1] == result[:run_array].max
-      check_text = 'First'
-    elsif result[:run_array][1] == result[:run_array].min
-      check_text = 'Last'
-    else
-      check_text = 'Second'
-    end
+    check_text = if result[:run_array][1] == result[:run_array].max
+                   'First'
+                 elsif result[:run_array][1] == result[:run_array].min
+                   'Last'
+                 else
+                   'Second'
+                 end
     assert(expected: check_text, actual: result[:text])
   end
 end
