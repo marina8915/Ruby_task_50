@@ -1,9 +1,9 @@
+$LOAD_PATH.unshift('.')
+
 require 'matrix'
-require './test.rb'
+require 'test'
 
 class Tasks
-  PI = 3.14
-
   def task(num:)
     puts "\n Task #{num}"
   end
@@ -94,7 +94,7 @@ class Tasks
 
   def task_8(n_corners:, radius:)
     task(num: 8)
-    (2 * radius * Math.tan(PI / n_corners) * n_corners).round(4)
+    (2 * radius * Math.tan(Math::PI / n_corners) * n_corners).round(4)
   end
 
   def task_9(resistance1:, resistance2:, resistance3:)
@@ -128,7 +128,7 @@ class Tasks
 
   def task_16(circumference:)
     task(num: 16)
-    result = PI * Math.sqrt(circumference / (2 * PI))
+    result = Math::PI * Math.sqrt(circumference / (2 * Math::PI))
     result.round(2)
   end
 
