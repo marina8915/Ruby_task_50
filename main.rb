@@ -3,6 +3,7 @@ $LOAD_PATH.unshift('.')
 require 'matrix'
 require 'test'
 
+# 50 tasks
 class Tasks
   def task(num:)
     puts "\n Task #{num}"
@@ -59,13 +60,13 @@ class Tasks
   # place of the horse
   def horses_num(run:, horse_num:)
     run.map! { |x| x + rand(1..100) }
-    if run[horse_num - 1] == run.max
-      text = 'First'
-    elsif run[horse_num - 1] == run.min
-      text = 'Last'
-    else
-      text = 'Second'
-    end
+    text = if run[horse_num - 1] == run.max
+             'First'
+           elsif run[horse_num - 1] == run.min
+             'Last'
+           else
+             'Second'
+           end
     { run_array: run, text: text }
   end
 
@@ -94,7 +95,8 @@ class Tasks
 
   def task_8(n_corners:, radius:)
     task(num: 8)
-    (2 * radius * Math.tan(Math::PI / n_corners) * n_corners).round(4)
+    result = 2 * radius * Math.tan(3.14 / n_corners) * n_corners
+    result.round(4)
   end
 
   def task_9(resistance1:, resistance2:, resistance3:)
@@ -142,10 +144,10 @@ class Tasks
 
   def task_30(real_num:)
     task(num: 30)
-    degree2 = real_num**2
     degree3 = real_num**3
-    res1 = 1 - 2 * real_num + 3 * degree2 - 4 * degree3
-    res2 = 1 + 2 * real_num + 3 * degree2 + 4 * degree2
+    middle = 2 * real_num + 3 * real_num**2
+    res1 = 1 - middle - 4 * degree3
+    res2 = 1 + middle + 4 * degree3
     { result1: res1, result2: res2 }
   end
 
@@ -213,7 +215,12 @@ class Tasks
     task(num: 185)
     array = new_array(quantity: natural_number)
     array2 = array.select { |elem| elem > 0 }
-    { array: array2, sum: array2.reduce(:+)**2 }
+    sum = if array2 != []
+            array2.reduce(:+)**2
+          else
+            0
+          end
+    { array: array2, sum: sum }
   end
 
   def task_191(natural_number:)
@@ -221,12 +228,8 @@ class Tasks
     quantity = 0
     array = new_array(quantity: natural_number)
     array.map! do |elem|
-      if elem > 7
-        quantity += 1
-        elem = 7
-      else
-        elem
-      end
+      quantity += 1 if elem > 7
+      elem > 7 ? 7 : elem
     end
     { array: array, quantity: quantity }
   end
@@ -327,10 +330,8 @@ class Tasks
     a = []
     (0..natural_number - 1).each do |i|
       a[i] = []
-      if i.zero?
-        a[i] << 1
-      else
-        a[i] << 1
+      a[i].push(1)
+      if i > 0
         (0..a[i - 1].size - 2).each do |j|
           a[i].unshift(a[i - 1][j] + a[i - 1][j + 1])
         end
@@ -443,18 +444,12 @@ class Tasks
     digit_user = ''
     3.times do
       puts 'Guess the digit (0..9)'
-      digit_user = check_digit(digit: gets.chomp.to_i,
-                               lower_bound: 0,
-                               top_bound: 9)
+      digit_user = check_digit(digit: gets.to_i, lower_bound: 0, top_bound: 9)
       break if digit_user == digit
 
       puts hint(digit1: digit_user, digit2: digit)
     end
-    if digit_user != digit
-      puts "You did not guess #{digit}"
-    else
-      puts 'Right you are!'
-    end
+    puts digit_user != digit ? "You did not guess #{digit}" : 'Right you are!'
   end
 
   def task_988
