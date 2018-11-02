@@ -1,4 +1,6 @@
-require './main'
+$LOAD_PATH.unshift('.')
+
+require 'main'
 
 # Tests for tasks with real numbers and other
 class Test < Tasks
@@ -114,30 +116,17 @@ class Test < Tasks
     assert(expected: [1, 5],
            actual: task_561(natural_number: 5))
   end
+
+  # run all methods -> tests_array:, instance -> tests:
+  # except methods assert, ru_tests
+  def run_tests(tests_array:, tests:)
+    tests_array.each do |test_method|
+      if test_method != :assert && test_method != :run_tests
+        tests.send(test_method)
+      end
+    end
+  end
 end
-
-test = Test.new
-
-test.test_1
-test.test_2
-test.test_24
-test.test_30
-test.test_33
-test.test_34
-test.test_41
-test.test_43
-test.test_62
-test.test_64
-test.test_65
-test.test_67
-test.test_207
-test.test_224
-test.test_225
-test.test_302
-test.test_325
-test.test_328
-test.test_555
-test.test_561
 
 # Tests for physics tasks
 class TestPhysics < Test
@@ -156,7 +145,6 @@ class TestPhysics < Test
     assert(expected: 2.84, actual: task_13(pendulum_length: 2))
   end
 end
-
 # Tests for tasks with array
 class TestArray < Test
   def test_number_array
@@ -315,13 +303,6 @@ class TestGame < Test
   end
 end
 
-game = TestGame.new
-
-game.test_check_digit
-game.test_check_digit_fail
-game.test_hint
-game.test_horse_num
-
 # Tests for tasks with matrix
 class TestMatrix < Test
   def test_new_matrix_size
@@ -369,15 +350,6 @@ class TestMatrix < Test
   end
 end
 
-matrix = TestMatrix.new
-
-matrix.test_new_matrix_size
-matrix.test_697
-matrix.test_698
-matrix.test_699
-matrix.test_699
-matrix.test_704
-
 # Tests for tasks with date
 class TestDate < Test
   def test_822
@@ -394,8 +366,25 @@ class TestDate < Test
   end
 end
 
-date = TestDate.new
+tests = TestPhysics.new
+tests.run_tests(tests_array: TestPhysics.instance_methods(false), tests: tests)
 
-date.test_822
-date.test_823
-date.test_831
+shapes = TestShapes.new
+shapes.run_tests(tests_array: TestShapes.instance_methods(false), tests: shapes)
+
+matrix = TestMatrix.new
+matrix.run_tests(tests_array: TestMatrix.instance_methods(false), tests: matrix)
+
+game = TestGame.new
+game.run_tests(tests_array: TestGame.instance_methods(false), tests: game)
+
+date = TestDate.new
+date.run_tests(tests_array: TestDate.instance_methods(false), tests: date)
+
+array = TestArray.new
+array.run_tests(tests_array: TestArray.instance_methods(false), tests: array)
+
+tests_array = Test.instance_methods(false)
+other_tests = Test.new
+
+other_tests.run_tests(tests_array: tests_array, tests: other_tests)

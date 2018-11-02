@@ -1,5 +1,7 @@
+$LOAD_PATH.unshift('.')
+
 require 'matrix'
-require './test'
+require 'test'
 
 class Tasks
   def task(num:)
