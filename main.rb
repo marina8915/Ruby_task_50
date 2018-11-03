@@ -150,14 +150,14 @@ class Tasks
     { min: array.min, max: array.max }
   end
 
-  def task_41
+  def task_41(natural_number = 3)
     task(num: 41)
-    new_array(quantity: 3).select { |x| x <= 3 && x >= 1 }
+    new_array(quantity: natural_number).select { |x| x <= 3 && x >= 1 }
   end
 
-  def task_43
+  def task_43(natural_number = 3)
     task(num: 43)
-    array = new_array(quantity: 3)
+    array = new_array(quantity: natural_number)
     array2 = array.select { |x| x > 0 }.map { |x| x**2 }
     { array: array, array2: array2 }
   end
@@ -260,9 +260,11 @@ class Tasks
     min
   end
 
-  def task_272
+  def task_272(natural_number = 50)
     task(num: 272)
-    precipitation = new_array(quantity: 50, lower_bound: 1, top_bound: 100)
+    precipitation = new_array(quantity: natural_number,
+                              lower_bound: 1,
+                              top_bound: 100)
     average = precipitation.reduce(:+) / precipitation.size
     deviation = []
     precipitation.each { |x| deviation.push(x - average) }
@@ -287,11 +289,11 @@ class Tasks
     number.length
   end
 
-  def task_317
+  def task_317(natural_number = 10)
     task(num: 317)
-    array = new_array(quantity: 10)
+    array = new_array(quantity: natural_number)
     sum_array = 0
-    (0..9).each { |i| sum_array += array[i]**(i + 1) }
+    (0..natural_number - 1).each { |i| sum_array += array[i]**(i + 1) }
   end
 
   def task_325(natural_number:)
@@ -300,9 +302,9 @@ class Tasks
     array_separators(array: separators)
   end
 
-  def task_328
+  def task_328(lower_bound = 1, top_bound = 100)
     task(num: 328)
-    array_separators(array: (1..100))
+    array_separators(array: (lower_bound..top_bound))
   end
 
   def task_536(natural_number:)

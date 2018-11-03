@@ -289,18 +289,6 @@ class TestGame < Test
     result = 'less than needed'
     assert(expected: result, actual: hint(digit1: 2, digit2: 3))
   end
-
-  def test_horse_num
-    result = horses_num(run: [1, 2, 3], horse_num: 2)
-    check_text = if result[:run_array][1] == result[:run_array].max
-                   'First'
-                 elsif result[:run_array][1] == result[:run_array].min
-                   'Last'
-                 else
-                   'Second'
-                 end
-    assert(expected: check_text, actual: result[:text])
-  end
 end
 
 # Tests for tasks with matrix
