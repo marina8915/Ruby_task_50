@@ -3,6 +3,7 @@ $LOAD_PATH.unshift('.')
 require 'matrix'
 require 'test'
 
+# 50 tasks
 class Tasks
   def task(num:)
     puts "\n Task #{num}"
@@ -34,7 +35,7 @@ class Tasks
     until (lower_bound..top_bound).cover? digit
       puts 'incorrect value'
       puts 'take again'
-      digit = gets.chomp.to_i
+      digit = gets.to_i
     end
     digit
   end
@@ -54,19 +55,6 @@ class Tasks
     elsif digit1 < digit2
       'less than needed'
     end
-  end
-
-  # place of the horse
-  def horses_num(run:, horse_num:)
-    run.map! { |x| x + rand(1..100) }
-    if run[horse_num - 1] == run.max
-      text = 'First'
-    elsif run[horse_num - 1] == run.min
-      text = 'Last'
-    else
-      text = 'Second'
-    end
-    { run_array: run, text: text }
   end
 
   def task_1(number_a:, number_b:)
@@ -94,7 +82,8 @@ class Tasks
 
   def task_8(n_corners:, radius:)
     task(num: 8)
-    (2 * radius * Math.tan(Math::PI / n_corners) * n_corners).round(4)
+    result = 2 * radius * Math.tan(3.14 / n_corners) * n_corners
+    result.round(4)
   end
 
   def task_9(resistance1:, resistance2:, resistance3:)
@@ -142,10 +131,10 @@ class Tasks
 
   def task_30(real_num:)
     task(num: 30)
-    degree2 = real_num**2
     degree3 = real_num**3
-    res1 = 1 - 2 * real_num + 3 * degree2 - 4 * degree3
-    res2 = 1 + 2 * real_num + 3 * degree2 + 4 * degree2
+    middle = 2 * real_num + 3 * real_num**2
+    res1 = 1 - middle - 4 * degree3
+    res2 = 1 + middle + 4 * degree3
     { result1: res1, result2: res2 }
   end
 
@@ -161,14 +150,14 @@ class Tasks
     { min: array.min, max: array.max }
   end
 
-  def task_41
+  def task_41(natural_number = 3)
     task(num: 41)
-    new_array(quantity: 3).select { |x| x <= 3 && x >= 1 }
+    new_array(quantity: natural_number).select { |x| x <= 3 && x >= 1 }
   end
 
-  def task_43
+  def task_43(natural_number = 3)
     task(num: 43)
-    array = new_array(quantity: 3)
+    array = new_array(quantity: natural_number)
     array2 = array.select { |x| x > 0 }.map { |x| x**2 }
     { array: array, array2: array2 }
   end
@@ -213,7 +202,12 @@ class Tasks
     task(num: 185)
     array = new_array(quantity: natural_number)
     array2 = array.select { |elem| elem > 0 }
-    { array: array2, sum: array2.reduce(:+)**2 }
+    sum = if array2 != []
+            array2.reduce(:+)**2
+          else
+            0
+          end
+    { array: array2, sum: sum }
   end
 
   def task_191(natural_number:)
@@ -221,12 +215,8 @@ class Tasks
     quantity = 0
     array = new_array(quantity: natural_number)
     array.map! do |elem|
-      if elem > 7
-        quantity += 1
-        elem = 7
-      else
-        elem
-      end
+      quantity += 1 if elem > 7
+      elem > 7 ? 7 : elem
     end
     { array: array, quantity: quantity }
   end
@@ -270,9 +260,11 @@ class Tasks
     min
   end
 
-  def task_272
+  def task_272(natural_number = 50)
     task(num: 272)
-    precipitation = new_array(quantity: 50, lower_bound: 1, top_bound: 100)
+    precipitation = new_array(quantity: natural_number,
+                              lower_bound: 1,
+                              top_bound: 100)
     average = precipitation.reduce(:+) / precipitation.size
     deviation = []
     precipitation.each { |x| deviation.push(x - average) }
@@ -297,11 +289,11 @@ class Tasks
     number.length
   end
 
-  def task_317
+  def task_317(natural_number = 10)
     task(num: 317)
-    array = new_array(quantity: 10)
+    array = new_array(quantity: natural_number)
     sum_array = 0
-    (0..9).each { |i| sum_array += array[i]**(i + 1) }
+    (0..natural_number - 1).each { |i| sum_array += array[i]**(i + 1) }
   end
 
   def task_325(natural_number:)
@@ -310,9 +302,9 @@ class Tasks
     array_separators(array: separators)
   end
 
-  def task_328
+  def task_328(lower_bound = 1, top_bound = 100)
     task(num: 328)
-    array_separators(array: (1..100))
+    array_separators(array: (lower_bound..top_bound))
   end
 
   def task_536(natural_number:)
@@ -327,10 +319,8 @@ class Tasks
     a = []
     (0..natural_number - 1).each do |i|
       a[i] = []
-      if i.zero?
-        a[i] << 1
-      else
-        a[i] << 1
+      a[i].push(1)
+      if i > 0
         (0..a[i - 1].size - 2).each do |j|
           a[i].unshift(a[i - 1][j] + a[i - 1][j + 1])
         end
@@ -443,60 +433,70 @@ class Tasks
     digit_user = ''
     3.times do
       puts 'Guess the digit (0..9)'
-      digit_user = check_digit(digit: gets.chomp.to_i,
-                               lower_bound: 0,
-                               top_bound: 9)
+      digit_user = check_digit(digit: gets.to_i, lower_bound: 0, top_bound: 9)
       break if digit_user == digit
 
       puts hint(digit1: digit_user, digit2: digit)
     end
-    if digit_user != digit
-      puts "You did not guess #{digit}"
-    else
-      puts 'Right you are!'
-    end
+    puts digit_user != digit ? "You did not guess #{digit}" : 'Right you are!'
+  end
+
+  # select horse, task 988
+  def select_horse
+    puts horses = { 1 => 'Watercolor', 2 => 'Alpha', 3 => 'Gallop' }
+    puts 'Select horses (1..3)'
+    horse_num = check_digit(digit: gets.to_i, lower_bound: 1, top_bound: 3)
+    puts horses[horse_num]
+    horse_num
+  end
+
+  # place of the horse, task 988
+  def horses_num(run:, horse_num:)
+    run.map! { |x| x + rand(1..100) }
+    text = if run[horse_num - 1] == run.max
+             'First'
+           elsif run[horse_num - 1] == run.min
+             'Last'
+           else
+             'Second'
+           end
+    puts text
+    run
   end
 
   def task_988
     task(num: 988)
-    puts horses = { 1 => 'Watercolor', 2 => 'Alpha', 3 => 'Gallop' }
-    puts 'Select horses (1..3)'
-    horse_num = check_digit(digit: gets.chomp.to_i,
-                            lower_bound: 1,
-                            top_bound: 3)
-    user_horse = horses[horse_num]
-    puts user_horse
+    horse_num = select_horse
     finish = 500
     horses_run = []
     3.times { horses_run.push(rand(1..100)) }
     while horses_run.max < finish
       horses_run = horses_num(run: horses_run, horse_num: horse_num)
     end
-    if horses_run[horse_num - 1] >= finish
-      puts 'Victory!'
+    puts horses_run[horse_num - 1] >= finish ? 'Victory!' : 'Try again.'
+  end
+
+  # result game 100 matches
+  def matches_result(first:, second:)
+    if first > second
+      'First is won'
+    elsif first == second
+      'Won friendship'
     else
-      puts 'Try again.'
+      'Second is won'
     end
   end
 
   def task_1009
-    task(num: 1009)
-    puts 'Game - 100 matches'
-    puts 'must take from 1 to 10 matches'
-    finish = 100
+    puts 'Game - 100 matches \n must take from 1 to 10 matches'
     first_player = 0
     second_player = 0
     until first_player >= 100 || second_player >= 100
       puts 'first player'
-      first_player += check_digit(digit: gets.chomp.to_i)
+      first_player += check_digit(digit: gets.to_i)
       puts 'second player'
-      second_player += check_digit(digit: gets.chomp.to_i)
+      second_player += check_digit(digit: gets.to_i)
     end
-
-    if first_player >= finish
-      puts 'First player is won.'
-    else
-      puts 'Second player is won.'
-    end
+    puts matches_result(first: first_player, second: second_player)
   end
 end
