@@ -35,7 +35,7 @@ class Tasks
     until (lower_bound..top_bound).cover? digit
       puts 'incorrect value'
       puts 'take again'
-      digit = gets.chomp.to_i
+      digit = gets.to_i
     end
     digit
   end
@@ -55,19 +55,6 @@ class Tasks
     elsif digit1 < digit2
       'less than needed'
     end
-  end
-
-  # place of the horse
-  def horses_num(run:, horse_num:)
-    run.map! { |x| x + rand(1..100) }
-    text = if run[horse_num - 1] == run.max
-             'First'
-           elsif run[horse_num - 1] == run.min
-             'Last'
-           else
-             'Second'
-           end
-    { run_array: run, text: text }
   end
 
   def task_1(number_a:, number_b:)
@@ -452,26 +439,39 @@ class Tasks
     puts digit_user != digit ? "You did not guess #{digit}" : 'Right you are!'
   end
 
-  def task_988
-    task(num: 988)
+  # select horse, task 988
+  def select_horse
     puts horses = { 1 => 'Watercolor', 2 => 'Alpha', 3 => 'Gallop' }
     puts 'Select horses (1..3)'
-    horse_num = check_digit(digit: gets.chomp.to_i,
-                            lower_bound: 1,
-                            top_bound: 3)
-    user_horse = horses[horse_num]
-    puts user_horse
+    horse_num = check_digit(digit: gets.to_i, lower_bound: 1, top_bound: 3)
+    puts horses[horse_num]
+    horse_num
+  end
+
+  # place of the horse, task 988
+  def horses_num(run:, horse_num:)
+    run.map! { |x| x + rand(1..100) }
+    text = if run[horse_num - 1] == run.max
+             'First'
+           elsif run[horse_num - 1] == run.min
+             'Last'
+           else
+             'Second'
+           end
+    puts text
+    run
+  end
+
+  def task_988
+    task(num: 988)
+    horse_num = select_horse
     finish = 500
     horses_run = []
     3.times { horses_run.push(rand(1..100)) }
     while horses_run.max < finish
       horses_run = horses_num(run: horses_run, horse_num: horse_num)
     end
-    if horses_run[horse_num - 1] >= finish
-      puts 'Victory!'
-    else
-      puts 'Try again.'
-    end
+    puts horses_run[horse_num - 1] >= finish ? 'Victory!' : 'Try again.'
   end
 
   def task_1009
