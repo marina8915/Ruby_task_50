@@ -474,24 +474,27 @@ class Tasks
     puts horses_run[horse_num - 1] >= finish ? 'Victory!' : 'Try again.'
   end
 
+  # result game 100 matches
+  def matches_result(first:, second:)
+    if first > second
+      'First is won'
+    elsif first == second
+      'Won friendship'
+    else
+      'Second is won'
+    end
+  end
+
   def task_1009
-    task(num: 1009)
-    puts 'Game - 100 matches'
-    puts 'must take from 1 to 10 matches'
-    finish = 100
+    puts 'Game - 100 matches \n must take from 1 to 10 matches'
     first_player = 0
     second_player = 0
     until first_player >= 100 || second_player >= 100
       puts 'first player'
-      first_player += check_digit(digit: gets.chomp.to_i)
+      first_player += check_digit(digit: gets.to_i)
       puts 'second player'
-      second_player += check_digit(digit: gets.chomp.to_i)
+      second_player += check_digit(digit: gets.to_i)
     end
-
-    if first_player >= finish
-      puts 'First player is won.'
-    else
-      puts 'Second player is won.'
-    end
+    puts matches_result(first: first_player, second: second_player)
   end
 end
