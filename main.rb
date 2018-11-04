@@ -1,7 +1,7 @@
 $LOAD_PATH.unshift('.')
 
 require 'matrix'
-require 'test'
+require 'tests'
 
 # 50 tasks
 class Tasks

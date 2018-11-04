@@ -1,8 +1,8 @@
 GIT
   remote: https://github.com/marina8915/test.git
-  revision: 8b4eb71ab11bbdb2224a7df0ca352798a07b2170
+  revision: 1977a09225d6330f9ff23057b0b353611c0c7591
   specs:
-    test (0.1.0)
+    test (0.1.1)
 
 GEM
   remote: https://rubygems.org/
