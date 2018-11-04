@@ -1,13 +1,15 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    tasks_gem (0.1.1)
+    run_tests (0.1.1)
+    tasks_gem (0.1.4)
+      run_tests (~> 0.1.1)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
-  tasks_gem (~> 0.1.1)
+  tasks_gem (~> 0.1.4)
 
 BUNDLED WITH
    1.17.1
