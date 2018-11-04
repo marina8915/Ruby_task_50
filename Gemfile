@@ -4,4 +4,4 @@ source "https://rubygems.org"
 
 git_source(:github) {|repo_name| "https://github.com/#{repo_name}" }
 
-gem 'test', :git => 'https://github.com/marina8915/test.git'
+gem 'tasks_gem', '~> 0.1.1'

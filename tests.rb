@@ -1,10 +1,11 @@
 $LOAD_PATH.unshift('.')
 
 require 'main'
+require 'tasks'
 require 'test'
 
 # Tests for tasks with real numbers and other
-class Tests < Tasks
+class Tests < Tasks::Task
   def test_1
     result = { sum: 3, difference: -1, multiplication: 2 }
     Test.assert(expected: result, actual: task_1(number_a: 1, number_b: 2))
@@ -116,7 +117,7 @@ class Tests < Tasks
 end
 
 # Tests for physics tasks
-class TestPhysics < Tasks
+class TestPhysics < Tasks::Task
   def test_9
     Test.assert(expected: 0.9375,
                 actual: task_9(resistance1: 2.5,
@@ -134,7 +135,7 @@ class TestPhysics < Tasks
 end
 
 # Tests for tasks with array
-class TestArray < Tasks
+class TestArray < Tasks::Task
   def test_number_array
     result = [2, 3]
     Test.assert(expected: result, actual: number_array(digit: 23))
@@ -220,7 +221,7 @@ class TestArray < Tasks
 end
 
 # Tests for tasks with shapes
-class TestShapes < Tasks
+class TestShapes < Tasks::Task
   def test_3
     result = { Volume: 8, Square: 24 }
     Test.assert(expected: result, actual: task_3(edge_length: 2))
@@ -261,7 +262,7 @@ class TestShapes < Tasks
 end
 
 # Tests for games
-class TestGame < Tasks
+class TestGame < Tasks::Task
   def test_check_digit
     Test.assert(expected: 5, actual: check_digit(digit: 5))
   end
@@ -282,7 +283,7 @@ class TestGame < Tasks
 end
 
 # Tests for tasks with matrix
-class TestMatrix < Tasks
+class TestMatrix < Tasks::Task
   def test_new_matrix_size
     result = Matrix.rows(new_matrix(n_lines: 3, m_lines: 4))
     Test.assert(expected: [3, 4], actual: [result.row_size, result.column_size])
@@ -329,7 +330,7 @@ class TestMatrix < Tasks
 end
 
 # Tests for tasks with date
-class TestDate < Tasks
+class TestDate < Tasks::Task
   def test_822
     Test.assert(expected: '365 days', actual: task_822(year: 2018))
   end
@@ -345,10 +346,10 @@ class TestDate < Tasks
   end
 end
 
-Test.run_tests(test_class: Tests.new.class, tests: Tests.new)
-Test.run_tests(test_class: TestArray.new.class, tests: TestArray.new)
-Test.run_tests(test_class: TestDate.new.class, tests: TestDate.new)
-Test.run_tests(test_class: TestGame.new.class, tests: TestGame.new)
-Test.run_tests(test_class: TestMatrix.new.class, tests: TestMatrix.new)
-Test.run_tests(test_class: TestShapes.new.class, tests: TestShapes.new)
-Test.run_tests(test_class: TestPhysics.new.class, tests: TestPhysics.new)
+Test.run_tests(test_class: Tests, tests: Tests.new)
+Test.run_tests(test_class: TestArray, tests: TestArray.new)
+Test.run_tests(test_class: TestDate, tests: TestDate.new)
+Test.run_tests(test_class: TestGame, tests: TestGame.new)
+Test.run_tests(test_class: TestMatrix, tests: TestMatrix.new)
+Test.run_tests(test_class: TestShapes, tests: TestShapes.new)
+Test.run_tests(test_class: TestPhysics, tests: TestPhysics.new)

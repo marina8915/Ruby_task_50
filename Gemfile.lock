@@ -1,18 +1,13 @@
-GIT
-  remote: https://github.com/marina8915/test.git
-  revision: 1977a09225d6330f9ff23057b0b353611c0c7591
-  specs:
-    test (0.1.1)
-
 GEM
   remote: https://rubygems.org/
   specs:
+    tasks_gem (0.1.1)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
-  test!
+  tasks_gem (~> 0.1.1)
 
 BUNDLED WITH
    1.17.1
