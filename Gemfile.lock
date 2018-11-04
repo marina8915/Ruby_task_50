@@ -1,0 +1,18 @@
+GIT
+  remote: https://github.com/marina8915/test.git
+  revision: 8b4eb71ab11bbdb2224a7df0ca352798a07b2170
+  specs:
+    test (0.1.0)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  test!
+
+BUNDLED WITH
+   1.17.1
