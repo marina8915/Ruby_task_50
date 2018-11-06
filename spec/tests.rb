@@ -1,6 +1,5 @@
 $LOAD_PATH.unshift('.')
 
-require 'main'
 require 'tasks'
 require 'test'
 
