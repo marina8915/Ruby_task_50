@@ -37,7 +37,7 @@ print Tasks::Task.methods(false), "\n"
 ```
 ## Dependencies:
 
-run_tests ~> 0.1.1
+run_tests ~> 0.1.3
 https://rubygems.org/gems/run_tests
 
 ## Development
