@@ -1,6 +1,8 @@
 # tasks_gem
 
 50 tasks
+https://rubygems.org/gems/tasks_gem
+
 Book with tasks http://libgen.io/book/index.php?md5=02CEF7BC8F9FAF75690C1CBE83BE3B70
 
 ## Installation
@@ -25,8 +27,8 @@ Example:
 ```ruby
 require 'tasks'
 
-print Tasks::Task.new.number_array(digit: 2356), "\n"
-print Tasks::Task.new.task_1(number_a: 2, number_b: 5), "\n"
+print Tasks::Task.number_array(digit: 2356), "\n"
+print Tasks::Task.task_1(number_a: 2, number_b: 5), "\n"
 ```
 
 All methods:
@@ -36,6 +38,7 @@ print Tasks::Task.instance_methods(false), "\n"
 ## Dependencies:
 
 run_tests ~> 0.1.1
+https://rubygems.org/gems/run_tests
 
 ## Development
 
