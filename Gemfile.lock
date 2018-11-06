@@ -1,8 +1,8 @@
 PATH
   remote: .
   specs:
-    tasks_gem (0.1.4)
-      run_tests (~> 0.1.1)
+    tasks_gem (0.1.5)
+      run_tests (~> 0.1.2)
 
 GEM
   remote: https://rubygems.org/
@@ -22,7 +22,7 @@ GEM
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.8.0)
     rspec-support (3.8.0)
-    run_tests (0.1.1)
+    run_tests (0.1.2)
 
 PLATFORMS
   ruby

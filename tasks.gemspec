@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["nonalatus@ukr.net"]
 
   spec.summary       = %q{50 tasks}
-  spec.homepage      = "https://github.com/marina8915/ruby-tasks-50"
+  spec.homepage      = "https://github.com/marina8915/tasks_gem"
   spec.license       = "MIT"
 
   # Specify which files should be added to the gem when it is released.
