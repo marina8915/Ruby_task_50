@@ -296,16 +296,18 @@ class TestMatrix < Tasks::Task
   class << self
     def test_new_matrix_size
       result = Matrix.rows(new_matrix(n_lines: 3, m_lines: 4))
-      Test.assert(expected: [3, 4], actual: [result.row_size, result.column_size])
+      Test.assert(expected: [3, 4],
+                  actual: [result.row_size, result.column_size])
     end
 
     def test_697
       actual = task_697(natural_number1: 2,
                         natural_number2: 1,
                         natural_number3: 3)
+      result = actual[:matrix_a] * actual[:matrix_b]
       Test.assert(expected: { matrix_a: actual[:matrix_a],
                               matrix_b: actual[:matrix_b],
-                              result: actual[:matrix_a] * actual[:matrix_b] },
+                              result: result },
                   actual: actual)
     end
 
@@ -330,11 +332,11 @@ class TestMatrix < Tasks::Task
 
     def test_704
       actual = task_704(natural_number: 2)
+      result = (actual[:matrix_a] + actual[:matrix_b]) * actual[:matrix_c]
       Test.assert(expected: { matrix_a: actual[:matrix_a],
                               matrix_b: actual[:matrix_b],
                               matrix_c: actual[:matrix_c],
-                              result: (actual[:matrix_a] + actual[:matrix_b]) *
-                                  actual[:matrix_c] },
+                              result: result },
                   actual: actual)
     end
   end
@@ -359,10 +361,10 @@ class TestDate < Tasks::Task
   end
 end
 
-Test.run_tests(test_class: Tests, tests: Tests.new)
-Test.run_tests(test_class: TestArray, tests: TestArray.new)
-Test.run_tests(test_class: TestDate, tests: TestDate.new)
-Test.run_tests(test_class: TestGame, tests: TestGame.new)
-Test.run_tests(test_class: TestMatrix, tests: TestMatrix.new)
-Test.run_tests(test_class: TestShapes, tests: TestShapes.new)
-Test.run_tests(test_class: TestPhysics, tests: TestPhysics.new)
+Test.run_tests(test_class: Tests, tests: Tests)
+Test.run_tests(test_class: TestArray, tests: TestArray)
+Test.run_tests(test_class: TestDate, tests: TestDate)
+Test.run_tests(test_class: TestGame, tests: TestGame)
+Test.run_tests(test_class: TestMatrix, tests: TestMatrix)
+Test.run_tests(test_class: TestShapes, tests: TestShapes)
+Test.run_tests(test_class: TestPhysics, tests: TestPhysics)

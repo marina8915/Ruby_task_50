@@ -33,7 +33,7 @@ print Tasks::Task.task_1(number_a: 2, number_b: 5), "\n"
 
 All methods:
 ```ruby
-print Tasks::Task.instance_methods(false), "\n"
+print Tasks::Task.methods(false), "\n"
 ```
 ## Dependencies:
 
