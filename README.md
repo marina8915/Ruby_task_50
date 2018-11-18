@@ -35,6 +35,8 @@ All methods:
 ```ruby
 print Tasks::Task.methods(false), "\n"
 ```
+Example use: https://github.com/marina8915/tasks-rails
+
 ## Dependencies:
 
 run_tests ~> 0.1.1
