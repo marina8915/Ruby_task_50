@@ -8,95 +8,78 @@ class Tests < Tasks::Task
   class << self
     def test_1
       result = { sum: 3, difference: -1, multiplication: 2 }
-      Test.assert(expected: result, actual: task_1(number_a: 1, number_b: 2))
+      Test.assert(expected: result, actual: task_1(a: 1, b: 2))
     end
 
     def test_2
       result = 0.3333
-      Test.assert(expected: result, actual: task_2(number_a: 2.0, number_b: 1))
+      Test.assert(expected: result, actual: task_2(x: 2.0, y: 1))
     end
 
     def test_24
-      Test.assert(expected: 3,
-                  actual: task_24(coordinate_x1: 2,
-                                  coordinate_x2: 2,
-                                  coordinate_y1: 1,
-                                  coordinate_y2: 4))
+      Test.assert(expected: 3, actual: task_24(x1: 2, x2: 2, y1: 1, y2: 4))
     end
 
     def test_30
       result = { result1: -584, result2: 586 }
-      Test.assert(expected: result, actual: task_30(real_num: 5))
+      Test.assert(expected: result, actual: task_30(x: 5))
     end
 
     def test_33
       result = { min: 5, max: 10 }
-      Test.assert(expected: result,
-                  actual: task_33(real_number_x: 5, real_number_y: 10))
+      Test.assert(expected: result, actual: task_33(x: 5, y: 10))
     end
 
     def test_34
       result = { min: 5, max: 20 }
-      Test.assert(expected: result,
-                  actual: task_34(real_number_x: 5,
-                                  real_number_y: 10,
-                                  real_number_z: 20))
+      Test.assert(expected: result, actual: task_34(x: 5, y: 10, z: 20))
     end
 
     def test_41
-      actual = task_41.select { |x| x >= 3 && x <= 1 }
-      Test.assert(expected: [], actual: actual)
+      Test.assert(expected: [], actual: task_41(x: 5, y: 10, z: 20))
     end
 
     def test_43
-      actual = task_43
-      expected = actual[:array].select { |x| x > 0 }.map { |x| x**2 }
-      Test.assert(expected: expected, actual: actual[:array2])
+      Test.assert(expected: [4], actual: task_43(x: 2, y: -10, z: -20))
     end
 
     def test_62
-      Test.assert(expected: true, actual: task_62(integer: 4))
+      Test.assert(expected: 'yes', actual: task_62(digit: 4))
     end
 
     def test_64
-      Test.assert(expected: 4, actual: task_64(natural_number: 400))
+      Test.assert(expected: 4, actual: task_64(digit: 400))
     end
 
     def test_65
-      Test.assert(expected: false, actual: task_65(natural_number: 5))
+      Test.assert(expected: 'no', actual: task_65(digit: 5))
     end
 
     def test_67
-      result = { digits_number: 3,
-                 sum: 13,
-                 last_digit: 6,
-                 first_digit: 2,
+      result = { digits_number: 3, sum: 13,
+                 last_digit: 6, first_digit: 2,
                  penultimate_number: 5 }
-      Test.assert(expected: result,
-                  actual: task_67(natural_number: 256))
+      Test.assert(expected: result, actual: task_67(digit: 256))
     end
 
     def test_207
-      Test.assert(expected: 189,
-                  actual: task_207(natural_number: 1_555_089))
+      Test.assert(expected: 189, actual: task_207(n: 1_555_089))
     end
 
     def test_224
-      Test.assert(expected: [1, 5, 25],
-                  actual: task_224(natural_number: 25))
+      Test.assert(expected: [1, 5, 25], actual: task_224(n: 25))
     end
 
     def test_225
-      Test.assert(expected: [5], actual: task_225(natural_number: 25))
+      Test.assert(expected: [5], actual: task_225(n: 25))
     end
 
     def test_302
-      Test.assert(expected: 3, actual: task_302(natural_number: 2512))
+      Test.assert(expected: 3, actual: task_302(n: 2512))
     end
 
     def test_325
-      Test.assert(expected: [1, 3, 5],
-                  actual: task_325(natural_number: 15))
+      Test.assert(expected: [1, 3, 5], actual: task_325(n: 15))
     end
 
     def test_328
@@ -107,12 +90,11 @@ class Tests < Tasks::Task
 
     def test_555
       Test.assert(expected: [[1], [1, 1], [1, 2, 1]],
-                  actual: task_555(natural_number: 3))
+                  actual: task_555(n: 3))
     end
 
     def test_561
-      Test.assert(expected: [1, 5],
-                  actual: task_561(natural_number: 5))
+      Test.assert(expected: [1, 5], actual: task_561(n: 5))
     end
   end
 end
@@ -128,11 +110,12 @@ class TestPhysics < Tasks::Task
     end
 
     def test_10
-      Test.assert(expected: 1.35, actual: task_10(height: 9))
+      Test.assert(expected: { time: 1.35 }, actual: task_10(height: 9))
     end
 
     def test_13
-      Test.assert(expected: 2.84, actual: task_13(pendulum_length: 2))
+      Test.assert(expected: { period: 2.84 },
+                  actual: task_13(pendulum_length: 2))
     end
   end
 end
@@ -163,7 +146,7 @@ class TestArray < Tasks::Task
     end
 
     def test_182
-      actual = task_182(natural_number: 5)
+      actual = task_182(n: 5)
       check = []
       actual[:arr_new].each do |x|
         check.push(x) if (x % 5).zero? && x % 7 != 0
@@ -175,40 +158,40 @@ class TestArray < Tasks::Task
     end
 
     def test_185
-      actual = task_185(natural_number: 2)
+      actual = task_185(n: 2)
       check = actual[:array].select { |elem| elem < 0 }
       Test.assert(expected: [], actual: check)
     end
 
     def test_191
-      actual = task_191(natural_number: 5)
+      actual = task_191(n: 5)
       check = actual[:array].select { |x| x > 7 }
       Test.assert(expected: [], actual: check)
     end
 
     def test_205
-      actual = task_205(natural_number: 2)
+      actual = task_205(n: 2)
       check = actual[:array]
       max = check.map(&:abs).max
-      sum = check.map { |x| x * x }.reduce(:+)
+      sum = Math.sqrt(check.map { |x| x * x }.reduce(:+))
       Test.assert(expected: { array: check, max: max, sum: sum },
                   actual: actual)
     end
 
     def test_272
-      actual = task_272
-      array_check = actual[:array]
+      actual = task_272(n: 2)
+      array_check = actual[:precipitation]
       average = array_check.reduce(:+) / array_check.size
       array_check2 = []
       array_check.each { |x| array_check2.push(x - average) }
-      Test.assert(expected: { array: array_check,
+      Test.assert(expected: { precipitation: array_check,
                               average: average,
                               deviation: array_check2 },
                   actual: actual)
     end
 
     def test_279
-      actual = task_279(natural_number: 5)
+      actual = task_279(n: 5)
       a = actual[:array_a]
       b = actual[:array_b]
       ab = []
@@ -217,9 +200,8 @@ class TestArray < Tasks::Task
     end
 
     def test_536
-      check = false
-      result = task_536(natural_number: 5)
-      check = true if result[:array] != result[:array].uniq
+      result = task_536(n: 5)
+      check = result[:array] != result[:array].uniq ? 'yes' : 'no'
       Test.assert(expected: check, actual: result[:identical_elements])
     end
   end
@@ -234,36 +216,33 @@ class TestShapes < Tasks::Task
     end
 
     def test_6
-      result = { hypotenuse: 3.6056, Square: 3.0 }
+      result = { hypotenuse: 3.61, Square: 3.0 }
       Test.assert(expected: result,
                   actual: task_6(cathetus_a: 2.0, cathetus_b: 3))
     end
 
     def test_8
-      Test.assert(expected: 15_069.1871,
+      Test.assert(expected: { Perimeter: 15_069.1871 },
                   actual: task_8(n_corners: 2.0, radius: 3))
     end
 
     def test_12
-      Test.assert(expected: 315.67, actual: task_12(side_of_triangle: 9))
+      Test.assert(expected: { Square: 315.67 },
+                  actual: task_12(side_of_triangle: 9))
     end
 
     def test_15
-      result = { cathetus_b: 8.77, Square: 0.88 }
-      Test.assert(expected: result,
-                  actual: task_15(cathetus_a: 2, hypotenuse: 9.0))
+      result = { cathetus_b: 8.77, Square: 0.89 }
+      Test.assert(expected: result, actual: task_15(cathetus_a: 2,
+                                                    hypotenuse: 9.0))
     end
 
     def test_16
-      Test.assert(expected: 2.8, actual: task_16(circumference: 5))
+      Test.assert(expected: { Square: 2.8 }, actual: task_16(circumference: 5))
     end
 
     def test_606
-      Test.assert(expected: true,
-                  actual: task_606(side_a: 5,
-                                   side_b: 1,
-                                   side_c: 2,
-                                   side_d: 3))
+      Test.assert(expected: 'yes', actual: task_606(a: 5, b: 1, c: 2, d: 3))
     end
   end
 end
@@ -273,15 +252,6 @@ class TestGame < Tasks::Task
   class << self
     def test_check_digit
       Test.assert(expected: 5, actual: check_digit(digit: 5))
-    end
-
-    def test_check_digit_fail
-      n = check_digit(digit: 25, lower_bound: 1, top_bound: 10)
-      if (1..10).cover? n
-        'Passed'
-      else
-        'Failed'
-      end
     end
 
     def test_hint
@@ -296,14 +266,12 @@ class TestMatrix < Tasks::Task
   class << self
     def test_new_matrix_size
       result = Matrix.rows(new_matrix(n_lines: 3, m_lines: 4))
-      Test.assert(expected: [3, 4],
-                  actual: [result.row_size, result.column_size])
+      Test.assert(expected: [3, 4], actual: [result.row_size,
+                                             result.column_size])
     end
 
     def test_697
-      actual = task_697(natural_number1: 2,
-                        natural_number2: 1,
-                        natural_number3: 3)
+      actual = task_697(k: 2, m: 1, l: 3)
       result = actual[:matrix_a] * actual[:matrix_b]
       Test.assert(expected: { matrix_a: actual[:matrix_a],
                               matrix_b: actual[:matrix_b],
@@ -312,15 +280,14 @@ class TestMatrix < Tasks::Task
     end
 
     def test_698
-      actual = task_698(natural_number: 2)
+      actual = task_698(n: 2)
       matrix = actual[:matrix]
-      Test.assert(expected: { matrix: matrix,
-                              result: matrix**2 },
+      Test.assert(expected: { matrix: matrix, result: matrix**2 },
                   actual: actual)
     end
 
     def test_699
-      actual = task_699(natural_number: 2)
+      actual = task_699(n: 2)
       matrix_a = actual[:matrix_a]
       matrix_b = actual[:matrix_b]
       result = matrix_a * matrix_b - matrix_b * matrix_a
@@ -331,7 +298,7 @@ class TestMatrix < Tasks::Task
     end
 
     def test_704
-      actual = task_704(natural_number: 2)
+      actual = task_704(n: 2)
       result = (actual[:matrix_a] + actual[:matrix_b]) * actual[:matrix_c]
       Test.assert(expected: { matrix_a: actual[:matrix_a],
                               matrix_b: actual[:matrix_b],
@@ -350,13 +317,11 @@ class TestDate < Tasks::Task
     end
 
     def test_823
-      Test.assert(expected: 1, actual: task_823(year1: 2018,
-                                                year2: 2021))
+      Test.assert(expected: 1, actual: task_823(n: 2018, m: 2021))
     end
 
     def test_831
-      Test.assert(expected: Time.mktime(2018, 10, 7),
-                  actual: task_831(year: 2018))
+      Test.assert(expected: Time.mktime(2018, 10, 7), actual: task_831(n: 2018))
     end
   end
 end
