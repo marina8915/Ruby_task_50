@@ -161,12 +161,12 @@ module Tasks
       end
 
       def task_65(digit:)
-        sum_array = number_array(digit: digit).reduce(:+)
+        sum_array = number_array(digit: digit.to_i).reduce(:+)
         sum_array**3 == digit**2 ? 'yes' : 'no'
       end
 
       def task_67(digit:)
-        digit.to_i
+        digit = digit.to_i
         array = number_array(digit: digit)
         penultimate_number = array[array.length - 2] if digit >= 10
         { digits_number: array.length,
@@ -219,12 +219,12 @@ module Tasks
       end
 
       def task_224(n:)
-        n.to_i
+        n = n.to_i
         (1..n).select { |x| (n % x).zero? }
       end
 
       def task_225(n:)
-        n.to_i
+        n = n.to_i
         (1..n).select {|x| (n % x**2).zero? && n % x**3 != 0 }
       end
 
@@ -235,7 +235,7 @@ module Tasks
           min = (x - y).abs if (x - y).abs < min
           y
         end
-        min
+        { array: num_array, min: min }
       end
 
       def task_272(n:)
@@ -249,7 +249,7 @@ module Tasks
       end
 
       def task_279(n:)
-        n.to_i
+        n = n.to_i
         a = new_array(quantity: n)
         b = new_array(quantity: n).reverse!
         ab = []
@@ -264,13 +264,14 @@ module Tasks
       end
 
       def task_317(n:)
-        array = new_array(quantity: n.to_i)
+        n = n.to_i
+        array = new_array(quantity: n)
         sum_array = 0
         (0..n - 1).each { |i| sum_array += array[i]**(i + 1) }
       end
 
       def task_325(n:)
-        n.to_i
+        n = n.to_i
         separators = (1..n).select do |x|
           (n % x).zero?
         end
@@ -304,7 +305,7 @@ module Tasks
       end
 
       def task_561(n:)
-        n.to_i
+        n = n.to_i
         new_array = []
         (1..n).each do |s|
           array = number_array(digit: s * s)
@@ -326,9 +327,9 @@ module Tasks
       end
 
       def task_697(k:, m:, l:)
-        k.to_i
-        m.to_i
-        l.to_i
+        k = k.to_i
+        m = m.to_i
+        l = l.to_i
         matrix_a = Matrix.rows(new_matrix(n_lines: k, m_lines: m))
         matrix_b = Matrix.rows(new_matrix(n_lines: m, m_lines: l))
         mult = matrix_a * matrix_b
@@ -336,13 +337,13 @@ module Tasks
       end
 
       def task_698(n:)
-        n.to_i
+        n = n.to_i
         matrix = Matrix.rows(new_matrix(n_lines: n, m_lines: n))
         { matrix: matrix, result: matrix**2 }
       end
 
       def task_699(n:)
-        n.to_i
+        n = n.to_i
         matrix_a = Matrix.rows(new_matrix(n_lines: n, m_lines: n))
         matrix_b = Matrix.rows(new_matrix(n_lines: n, m_lines: n))
         result = matrix_a * matrix_b - matrix_b * matrix_a
@@ -350,7 +351,7 @@ module Tasks
       end
 
       def task_704(n:)
-        n.to_i
+        n = n.to_i
         matrix_a = Matrix.rows(new_matrix(n_lines: n, m_lines: n))
         matrix_b = Matrix.rows(new_matrix(n_lines: n, m_lines: n))
         matrix_c = Matrix.rows(new_matrix(n_lines: n, m_lines: n))
@@ -365,20 +366,19 @@ module Tasks
       end
 
       def task_822(year:)
-        year.to_i
-        (year % 4).zero? ? '366 days' : '365 days'
+        (year.to_i % 4).zero? ? '366 days' : '365 days'
       end
 
       def task_823(n:, m:)
-        n.to_i
-        m.to_i
+        n = n.to_i
+        m = m.to_i
         leap_years = 0
         (n..m).each { |y| leap_years += 1 if (y % 4).zero? }
         leap_years
       end
 
       def task_831(n:)
-        n.to_i
+        n = n.to_i
         october = Time.mktime(n, 10, 1)
         day1 = october.wday
         if day1 < 7
@@ -390,9 +390,8 @@ module Tasks
       end
 
       def task_986(n:)
-        n.to_i
         digit = rand(0..9)
-        digit_user = check_digit(digit: n, lower_bound: 0, top_bound: 9)
+        digit_user = check_digit(digit: n.to_i, lower_bound: 0, top_bound: 9)
         digit_user != digit ? hint(digit1: digit_user, digit2: digit) : 'Right you are!'
       end
 
@@ -411,7 +410,7 @@ module Tasks
       end
 
       def task_988(horse_num:)
-        horse = (1..3).include? horse_num.to_i ? horse_num : 1
+        horse = (1..3).include? horse_num.to_i ? horse_num.to_i : 1
         finish = 500
         horses_run = []
         3.times { horses_run.push(rand(1..100)) }
