@@ -268,6 +268,7 @@ module Tasks
         array = new_array(quantity: n)
         sum_array = 0
         (0..n - 1).each { |i| sum_array += array[i]**(i + 1) }
+        { array: array, sum: sum_array }
       end
 
       def task_325(n:)
@@ -410,12 +411,13 @@ module Tasks
       end
 
       def task_988(horse_num:)
-        horse = (1..3).include? horse_num.to_i ? horse_num.to_i : 1
+        horse_num = horse_num.to_i
+        horse_num = 1 if (1..3).include? horse_num
         finish = 500
         horses_run = []
         3.times { horses_run.push(rand(1..100)) }
         while horses_run.max < finish
-          horses_run = horses_num(run: horses_run, horse_num: horse)
+          horses_run = horses_num(run: horses_run, horse_num: horse_num)
         end
         horses_run[horse_num - 1] >= finish ? 'Victory!' : 'Try again.'
       end
