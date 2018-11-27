@@ -250,13 +250,23 @@ end
 # Tests for games
 class TestGame < Tasks::Task
   class << self
-    def test_check_digit
-      Test.assert(expected: 5, actual: check_digit(digit: 5))
-    end
-
     def test_hint
       result = 'less than needed'
       Test.assert(expected: result, actual: hint(digit1: 2, digit2: 3))
+    end
+
+    def test_horse_place
+      Test.assert(expected: 'Victory!',
+                  actual: horse_place(run: [1, 2, 3], horse_num: 3))
+    end
+
+    def test_task_986
+      Test.assert(expected: 'incorrect value',
+                  actual: task_986(n: 25))
+    end
+
+    def test_task_988
+      Test.assert(expected: 'incorrect value', actual: task_988(horse_num: 5))
     end
   end
 end

@@ -28,15 +28,6 @@ module Tasks
         array
       end
 
-      # if digit not in diapason lower_bound..top_bound enter new n
-      def check_digit(digit:, lower_bound: 1, top_bound: 10)
-        if (lower_bound..top_bound).cover? digit
-          'incorrect value'
-        else
-          digit
-        end
-      end
-
       # array with random digits in diapason lower_bound..y
       def new_array(quantity:, lower_bound: -100, top_bound: 100)
         array = []
@@ -50,17 +41,6 @@ module Tasks
           'more than needed'
         elsif digit1 < digit2
           'less than needed'
-        end
-      end
-
-      # result game 100 matches
-      def matches_result(first:, second:)
-        if first > second
-          'First is won'
-        elsif first == second
-          'Won friendship'
-        else
-          'Second is won'
         end
       end
 
@@ -406,17 +386,18 @@ module Tasks
 
       def task_986(n:)
         digit = rand(0..9)
-        digit_user = check_digit(digit: n.to_i, lower_bound: 0, top_bound: 9)
-        return digit_user if digit_user == 'incorrect value'
+        digit_user = n.to_i
+        return 'incorrect value' unless (0..9).cover? digit_user
 
         digit_user != digit ? hint(digit1: digit_user, digit2: digit) : 'Right you are!'
       end
 
       # place of the horse, task 988
       def horse_place(run:, horse_num:)
-        if run[horse_num - 1] == run.max
+        horse_num -= 1
+        if run[horse_num] == run.max
           'Victory!'
-        elsif run[horse_num - 1] == run.min
+        elsif run[horse_num] == run.min
           'Last.'
         else
           'Second.'
@@ -447,8 +428,9 @@ module Tasks
 
       # return task condition by number
       def conditions(num:)
+        num = num.to_i
         if all_tasks.include? num
-          CONDITIONS[num.to_i]
+          CONDITIONS[num]
         else
           'Task not found.'
         end
