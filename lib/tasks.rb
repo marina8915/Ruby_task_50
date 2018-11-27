@@ -1,5 +1,6 @@
-require "tasks/version"
-require "matrix"
+require 'tasks/version'
+require 'matrix'
+require 'conditions'
 
 module Tasks
   class Error < StandardError; end
@@ -29,12 +30,11 @@ module Tasks
 
       # if digit not in diapason lower_bound..top_bound enter new n
       def check_digit(digit:, lower_bound: 1, top_bound: 10)
-        until (lower_bound..top_bound).cover? digit
-          puts 'incorrect value'
-          puts 'take again'
-          digit = gets.to_i
+        if (lower_bound..top_bound).cover? digit
+          'incorrect value'
+        else
+          digit
         end
-        digit
       end
 
       # array with random digits in diapason lower_bound..y
@@ -53,14 +53,24 @@ module Tasks
         end
       end
 
+      # result game 100 matches
+      def matches_result(first:, second:)
+        if first > second
+          'First is won'
+        elsif first == second
+          'Won friendship'
+        else
+          'Second is won'
+        end
+      end
+
       def task_1(a:, b:)
         sum = a + b
         diff = a - b
         mult = a * b
         { sum: sum.round(2),
           difference: diff.round(2),
-          multiplication: mult.round(2)
-        }
+          multiplication: mult.round(2) }
       end
 
       def task_2(x:, y:)
@@ -139,6 +149,10 @@ module Tasks
       def task_34(x:, y:, z:)
         array = [x, y, z]
         { min: array.min, max: array.max }
+      end
+
+      def task_39(digit1:, digit2:)
+        digit1 > digit2 ? digit1 : [digit1, digit2]
       end
 
       def task_41(x:, y:, z:)
@@ -393,187 +407,50 @@ module Tasks
       def task_986(n:)
         digit = rand(0..9)
         digit_user = check_digit(digit: n.to_i, lower_bound: 0, top_bound: 9)
+        return digit_user if digit_user == 'incorrect value'
+
         digit_user != digit ? hint(digit1: digit_user, digit2: digit) : 'Right you are!'
       end
 
       # place of the horse, task 988
-      def horses_num(run:, horse_num:)
-        run.map! { |x| x + rand(1..100) }
-        text = if run[horse_num - 1] == run.max
-                 'First'
-               elsif run[horse_num - 1] == run.min
-                 'Last'
-               else
-                 'Second'
-               end
-        puts text
-        run
+      def horse_place(run:, horse_num:)
+        if run[horse_num - 1] == run.max
+          'Victory!'
+        elsif run[horse_num - 1] == run.min
+          'Last.'
+        else
+          'Second.'
+        end
       end
 
       def task_988(horse_num:)
         horse_num = horse_num.to_i
-        horse_num = 1 if (1..3).include? horse_num
+        return 'incorrect value' unless (1..3).cover? horse_num
+
         finish = 500
         horses_run = []
         3.times { horses_run.push(rand(1..100)) }
         while horses_run.max < finish
-          horses_run = horses_num(run: horses_run, horse_num: horse_num)
+          horses_run.map! { |x| x + rand(1..100) }
         end
-        horses_run[horse_num - 1] >= finish ? 'Victory!' : 'Try again.'
+        horse_place(run: horses_run, horse_num: horse_num)
       end
 
-      # result game 100 matches
-      def matches_result(first:, second:)
-        if first > second
-          'First is won'
-        elsif first == second
-          'Won friendship'
-        else
-          'Second is won'
-        end
+      # return array with numbers of all tasks
+      def all_tasks
+        method_name = 'task_'
+        methods = Task.methods(false)
+        tasks = methods.select { |elem| elem.to_s.include? method_name }
+        tasks.map! { |elem| elem.to_s.delete method_name }
+        tasks.map!(&:to_i).sort!
       end
 
-      def task_1009
-        puts 'Game - 100 matches \n must take from 1 to 10 matches'
-        first_player = 0
-        second_player = 0
-        until first_player >= 100 || second_player >= 100
-          puts 'first player'
-          first_player += check_digit(digit: gets.to_i)
-          puts 'second player'
-          second_player += check_digit(digit: gets.to_i)
-        end
-        puts matches_result(first: first_player, second: second_player)
-      end
-
+      # return task condition by number
       def conditions(num:)
-        case num.to_i
-        when 1
-          'Даны два действительных числа a и b. Получить их сумму, разность и произведение.'
-        when 2
-          'Даны действительные числа x и y. Получить (|x| -|y|)/(1 + xy) '
-        when 3
-          'Дана длина ребра куба. Найти объем куба и площадь его боковой поверхности.'
-        when 6
-          'Даны катеты прямоугольного треугольника. Найти его гипотенузу и площадь.'
-        when 8
-          'Определить периметр правильного n-угольника, описанного около окружности радиуса r.'
-        when 9
-          'Три сопротивления R1, R2, R3 соединены параллельно. Найти сопротивление соединения.'
-        when 10
-          'Определить время падения камня на поверхность земли с высоты h.'
-        when 12
-          'Дана сторона равностороннего треугольника. Найти площадь этого треугольника.'
-        when 13
-          'Вычислить период колебания маятника длины l.'
-        when 15
-          'Даны гипотенуза и катет прямоугольного треугольника. Найти второй катет и радиус
-вписанной окружности.'
-        when 16
-          'Известна длина окружности. Найти площадь круга, ограниченного этой окружностью.'
-        when 24
-          'Вычислить расстояние между двумя точками с координатами x1,y1 и x2,y2.'
-        when 30
-          'Дано действительное число х. Не пользуясь никакими другими арифметическими операциями,
-кроме умножения, сложения и вычитания, вычислить: 1−2x +3x^2 −4x^3 и 1+2x +3x^2 +4x^3.
-Разрешается использовать не более восьми операций.'
-        when 33
-          'Даны действительные числа х, у. Получить: max (x, y), min (x, y).'
-        when 34
-          'Даны действительные числа x, y, z. Получить: min (x, y, z), max(x, y, z).'
-        when 41
-          'Даны три действительных числа. Выбрать из них те, которые принадлежат интервалу (1, 3).'
-        when 43
-          'Даны три действительных числа. Возвести в квадрат те из них, значения которых неотрицательны.'
-        when 62
-          'Определить, является ли данное целое число четным.'
-        when 64
-          'Дано натуральное число n (n > 99). Определить число сотен в нем.'
-        when 65
-          'Дано натуральное число n (n>99). Выяснить, верно ли, что n^2 равно кубу суммы цифр числа n.'
-        when 67
-          'Дано натуральное число n (n ≤ 100):
-          а) Сколько цифр в числе n?
-          б) Чему равна сумма его цифр?
-          в) Найти последнюю цифру числа n.
-          г) Найти первую цифру числа n.
-          д) В предположении, что n ≥ 10, найти предпоследнюю цифру числа n.'
-        when 182
-          'Дано натуральное число n.В массиве a1, …, an найти количество и сумму тех членов
-данной последовательности, которые делятся на 5 и не делятся на 7.'
-        when 185
-          'Дано натуральное число n. Получить удвоенную сумму всех положительных членов последовательности a1, …, an.'
-        when 191
-          'Дано натуральное число n. Заменить все большие семи члены последовательности a1, …, an числом 7.
-Вычислить количество таких членов.'
-        when 205
-          'Дано натуральное число n. Получить max(a1, …, an) и sqrt(a1^2 + ... +an^2).'
-        when 207
-          'Дано натуральное число n. Выбросить из записи числа n цифры 0 и 5,
-оставив прежним порядок остальных цифр. Например, из числа 59015509 должно получиться 919.'
-        when 224
-          'Дано натуральное число n. Получить все его натуральные делители.'
-        when 225
-          'Дано натуральное число n. Получить все такие натуральные q, что n делится на q^2 и не делится на q^3.'
-        when 230
-          'Дано натуральное число n. Найти длину наименьшего отрезка числовой оси, содержащего числа
-a1, …, an.'
-        when 272
-          'Даны действительные числа а1901, a1902, …,аn – количество осадков (в миллиметрах),
-выпавших в Москве в течение первых n лет нашего столетия.
-Надо вычислить среднее количество осадков и отклонение от среднего для каждого года.'
-        when 279
-          'Дано действительные числа n. Вычислить для  a1, …, an, b1, …, bn:
-(a1+bn)(a2+bn-1)...(an+b1).'
-        when 302
-          'Дано натуральное число n. Сколько различных цифр встречается в его десятичной записи?'
-        when 317
-          'Дано натуральное число n, для  a1, …, a10 вычислить a1 + a2^2 + ... + a10^10'
-        when 325
-          'Дано натуральное число n. Получить все простые делители этого числа.'
-        when 328
-          'Найти 100 первых простых чисел.'
-        when 536
-          'Дано натуральное число n. Выяснить, имеются ли среди чисел a1, ..., an совпадающие.'
-        when 555
-          'Дано натуральное n. Получить первые n строк треугольника Паскаля.
-Треугольником Паскаля называется числовой треугольник в котором по краям стоят единицы,
-а каждое число внутри равно сумме двух стоящих над ним в ближайшей строке сверху.'
-        when 561
-          'Дано натуральное число n. Среди чисел 1, ..., n найти все такие,
-запись которых совпадает с последними цифрами записи их квадрата (как, например, 6^2 = 36, 25^2 = 625 и т. д.).'
-        when 606
-          'Даны действительные положительные числа a, b, c, d.
-Выяснить, можно ли построить четырехугольник с такими длинами сторон.'
-        when 697
-          'Для матриц А и В размера k × m и m × l соответственно найти произведение АВ.'
-        when 698
-          'Для квадратной матрицы прядка n. Получить матрицуА^2.'
-        when 699
-          'Для квадратных матриц А и В порядка n. Получить матрицу АВ–ВА.'
-        when 704
-          'Для квадратных матриц A, B и C порядка n. Получить матрицу (A+B)C.'
-        when 710
-          'Для матрицы А размера m × n. Получить транспонированную матрицу А* (ее размер – m × n ).'
-        when 822
-          'Дан номер года. Указать число дней в этом году.'
-        when 823
-          'Даны натуральные числа n, m (n ≤ m ).
-Определить, сколько из чисел n, n+1, ..., m являются номерами високосных годов.'
-        when 831
-          'День учителя ежегодно отмечается в первое воскресенье октября. Дано натуральное число n, означающее номер года.
-Определить число, на которое в октябре указанного года приходится День учителя.'
-        when 986
-          '«Угадай число». Программа с помощью датчика случайных чисел выбирает число в диапазоне от 0 до 9.
-Попробуйте угадать это числ.'
-        when 988
-          '«Ипподром». Играющий выбирает одну из трех лошадей, состязающихся на бегах, и выигрывает,
-если его лошадь приходит первой. Скорость передвижения лошадей на разных этапах выбирается программой
-с помощью датчика случайных чисел.
-Введите номер лошади: 1 => Watercolor, 2 => Alpha, 3 => Gallop'
-        when 1009
-          '«100 спичек». Из кучки, первоначально содержащей 100 спичек, двое играющих поочередно берут
-по несколько спичек: не менее одной и не более десяти. Проигрывает взявший последнюю спичку.'
+        if all_tasks.include? num
+          CONDITIONS[num.to_i]
+        else
+          'Task not found.'
         end
       end
     end

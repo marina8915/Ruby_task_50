@@ -3,7 +3,7 @@
 50 tasks
 https://rubygems.org/gems/tasks_gem
 
-Book with tasks http://libgen.io/book/index.php?md5=02CEF7BC8F9FAF75690C1CBE83BE3B70
+[Book with tasks](http://libgen.io/book/index.php?md5=02CEF7BC8F9FAF75690C1CBE83BE3B70)
 
 ## Installation
 
@@ -27,20 +27,22 @@ Example:
 ```ruby
 require 'tasks'
 
-print Tasks::Task.number_array(digit: 2356), "\n"
-print Tasks::Task.task_1(number_a: 2, number_b: 5), "\n"
+Tasks::Task.task_1(a: 2, b: 5)
 ```
-
-All methods:
+Return array with numbers of all tasks:
 ```ruby
-print Tasks::Task.methods(false), "\n"
+Tasks::Task.all_tasks
+```
+Return task condition by number:
+```ruby
+Tasks::Task.conditions(num: 1)
 ```
 Example use: https://github.com/marina8915/tasks-rails
 
 ## Dependencies:
 
-run_tests ~> 0.1.1
-https://rubygems.org/gems/run_tests
+[run_tests](https://rubygems.org/gems/run_tests) ~> 0.1.3
+
 
 ## Development
 
